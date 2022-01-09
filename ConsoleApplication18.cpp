@@ -1,18 +1,12 @@
-﻿#include <iostream>
-
+#include <iostream>
 #include <stdio.h>
-
 #include <Windows.h>
-
 #include <time.h>
-
 #include <conio.h>
-
 #include <locale>
-
 #include <stdlib.h>
-
 #include <vector>
+#pragma warning(disable : 4996);
 
 #define INF = 1000000000; // значение "бесконечность"
 
@@ -22,11 +16,13 @@ bool* used;
 
 int N, z, i, j;
 
-using namespace std;
+using namespace std;	
 
 void printmatrix(int** source, int size);
 
 void generatematrix(int range);
+
+void  printMatrixToFile(int** source, int size);
 
 int main()
 
@@ -70,7 +66,7 @@ int main()
 
 	printf("\nИсходная матрица графа G:\n"); //Вывод матрицы смежности
 
-	printmatrix(G, N);
+	printMatrixToFile(G, N);
 
 	printf("\n");
 
@@ -185,5 +181,38 @@ void generatematrix(int range) {
 				G[j][i] = G[i][j]; //Т.к граф - неориент., происходит зеркальное заполнение
 
 			}
+
+}
+void printMatrixToFile(int** source, int size)
+
+{
+	FILE* fp = fopen("output.txt", "w");
+	fprintf(fp, " ");
+
+	for (int i = 0; i < size; i++)
+
+		fprintf(fp," v%d", i + 1);
+
+	fprintf(fp, "\n");
+
+	for (int i = 0; i < size; i++)
+
+	{
+
+		fprintf(fp, " v%d ", i + 1);
+
+		for (int j = 0; j < size; j++)
+
+			if (G[i][j] == 1000000000)
+
+				fprintf(fp, " INF");
+
+			else
+
+				fprintf(fp, "%3d ", source[i][j]);
+
+		fprintf(fp, "\n");
+
+	}
 
 }
